@@ -5,6 +5,7 @@ import Main from './main'
 import Web3 from 'web3';
 import './App.css';
 import DStorage from '../abis/DStorage.json'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
 const ipfsClient = require('ipfs-http-client') //Declare IPFS
@@ -77,8 +78,6 @@ class App extends Component {
       console.log('buffer', this.state.buffer)
     }
   }
-
-
   //Upload File
   uploadFile = description => {
     console.log("Submitting file to IPFS...")
@@ -126,18 +125,37 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Navbar account={this.state.account} />
-        {this.state.loading
-          ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main
-            account={this.state.account}
-            files={this.state.files.filter(item=>item.uploader===this.state.account)}
-            captureFile={this.captureFile}
-            uploadFile={this.uploadFile}
-          />
-        }
+      <div className='App'>
+         <Navbar account={this.state.account} />
+        <Router>
+          <Routes>
+            <Route path ="/Upload" element={<Main 
+                account={this.state.account}
+                files={this.state.files.filter(item => item.uploader === this.state.account)}
+                captureFile={this.captureFile}
+                uploadFile={this.uploadFile}/>}>
+            {/* <h1>HEllo world</h1>
+            { 
+            this.state.loading
+              ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
+              : <Main
+                account={this.state.account}
+                files={this.state.files.filter(item => item.uploader === this.state.account)}
+                captureFile={this.captureFile}
+                uploadFile={this.uploadFile}
+              />
+            } */}
+            </Route>
+            <Route exact path="/View_Files" >
+              
+            </Route>
+            <Route exact path="/Share_Files">
+               
+            </Route>
+          </Routes>
+        </Router>
       </div>
+
     );
   }
 }

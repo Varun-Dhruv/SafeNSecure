@@ -1,4 +1,5 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.4;
 
 contract DStorage {
   string public name = "DStorage";// Name
@@ -29,7 +30,7 @@ contract DStorage {
      uint uploadTime,
      address payable uploader 
   );
-  constructor() public {
+  constructor()  {
 
   }
 
@@ -51,9 +52,9 @@ contract DStorage {
 
     fileCount++; // Increment file id
 
-    files[fileCount]=File(fileCount,_fileHash,_fileSize,_fileType,_fileName,_fileDescription, now ,msg.sender);  // Add File to the contract
+    files[fileCount]=File(fileCount,_fileHash,_fileSize,_fileType,_fileName,_fileDescription, block.timestamp ,payable(msg.sender));  // Add File to the contract
 
-    emit FileUploaded(fileCount,_fileHash,_fileSize,_fileType,_fileName,_fileDescription, now ,msg.sender); // Trigger an event
+    emit FileUploaded(fileCount,_fileHash,_fileSize,_fileType,_fileName,_fileDescription, block.timestamp ,payable(msg.sender)); // Trigger an event
   }
 
 }
