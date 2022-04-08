@@ -1,11 +1,13 @@
 //import DStorage from '../abis/DStorage.json'
 import React, { Component } from 'react';
-import Navbar from './Navbar'
+// import Navbar from './Navbar'
+import Navbar from '../components/Navbar/Navbar'
 import Main from './main'
 import Web3 from 'web3';
 import './App.css';
 import DStorage from '../abis/DStorage.json'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home/Home';
 
 
 const ipfsClient = require('ipfs-http-client') //Declare IPFS
@@ -126,7 +128,8 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-         <Navbar account={this.state.account} />
+      
+         {/* <Navbar account={this.state.account} /> */}
         <Router>
           <Routes>
             <Route path ="/Upload" element={<Main 
@@ -134,8 +137,9 @@ class App extends Component {
                 files={this.state.files.filter(item => item.uploader === this.state.account)}
                 captureFile={this.captureFile}
                 uploadFile={this.uploadFile}/>}>
-            {/* <h1>HEllo world</h1>
-            { 
+
+
+            {/* { 
             this.state.loading
               ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
               : <Main
@@ -146,10 +150,10 @@ class App extends Component {
               />
             } */}
             </Route>
-            <Route exact path="/View_Files" >
+            <Route  path="/Home" element={<Home/>} >
               
             </Route>
-            <Route exact path="/Share_Files">
+            <Route exact path="/Share">
                
             </Route>
           </Routes>
