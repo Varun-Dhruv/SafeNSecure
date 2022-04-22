@@ -3,6 +3,8 @@ pragma solidity ^0.8.4;
 
 contract DStorage {
   string public name = "DStorage";// Name
+  string public userName;
+  mapping(address =>string) public Users;
   // Number of files
   uint public fileCount=0; 
   mapping(uint=>File) public files;// Mapping fileId=>Struct 
@@ -33,6 +35,15 @@ contract DStorage {
   constructor()  {
 
   }
+  function setUserName(string memory _userName) public {
+    
+    require(msg.sender!=address(0)); 
+    
+    require(bytes(Users[msg.sender]).length==0);
+    
+    Users[msg.sender]=_userName;
+  }
+  
 
 // Upload File function
   function uploadFile(string memory _fileHash, uint _fileSize, string memory _fileType, string memory _fileName, string memory _fileDescription) public {

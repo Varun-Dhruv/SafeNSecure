@@ -1,13 +1,16 @@
 //import DStorage from '../abis/DStorage.json'
 import React, { Component } from 'react';
 // import Navbar from './Navbar'
-import Navbar from '../components/Navbar/Navbar'
-import Main from './main'
+//import Navbar from '../components/Navbar/Navbar'
+//import Main from './main'
 import Web3 from 'web3';
 import './App.css';
 import DStorage from '../abis/DStorage.json'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home/Home';
+import Upload from './Upload/Upload'
+import View from './View_Files/View';
+import Share from './Share/Share';
 
 
 const ipfsClient = require('ipfs-http-client') //Declare IPFS
@@ -41,6 +44,7 @@ class App extends Component {
 
     const networkId = await web3.eth.net.getId() //Network ID
     const networkData = DStorage.networks[networkId]
+
     if (networkData) { //IF got connection, get data from contracts
 
       const dstorage = new web3.eth.Contract(DStorage.abi, networkData.address)  //Assign contract
@@ -114,12 +118,13 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      account: '',
+      account: '0x2241281922Efe379C835fa44C0b6243B276877DD',
       loading: false,
       dstorage: null,
       files: [],
       type: null,
-      name: null
+      name: null,
+      Username: '',
     }
 
     //Bind functions
@@ -128,34 +133,26 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-      
-         {/* <Navbar account={this.state.account} /> */}
+
+        {/* <Navbar account={this.state.account} /> */}
         <Router>
           <Routes>
-            <Route path ="/Upload" element={<Main 
-                account={this.state.account}
-                files={this.state.files.filter(item => item.uploader === this.state.account)}
-                captureFile={this.captureFile}
-                uploadFile={this.uploadFile}/>}>
+            <Route path="/" element={<Home account={this.state.account} />} />
 
-
-            {/* { 
-            this.state.loading
-              ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-              : <Main
-                account={this.state.account}
-                files={this.state.files.filter(item => item.uploader === this.state.account)}
-                captureFile={this.captureFile}
-                uploadFile={this.uploadFile}
-              />
-            } */}
-            </Route>
-            <Route  path="/Home" element={<Home/>} >
-              
-            </Route>
-            <Route exact path="/Share">
-               
-            </Route>
+            <Route path="/Upload" element={
+              this.state.loading
+                ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
+                : <Upload
+                  account={this.state.account}
+                  files={this.state.files.filter(item => item.uploader === this.state.account)}
+                  captureFile={this.captureFile}
+                  uploadFile={this.uploadFile}
+                />} />
+             <Route path="/View"  element={<View
+             account={this.state.account}
+             files={this.state.files.filter(item => item.uploader === this.state.account)}
+             />}/>
+            <Route path="/Share" element={<Share  account={this.state.account}/>} />
           </Routes>
         </Router>
       </div>

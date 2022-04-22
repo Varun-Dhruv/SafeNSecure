@@ -1,3 +1,48 @@
-.links a{
+.links-x a{
     color:#ffffff;
+}
+.navbar-x{
+    background-color: #00a2e2;
+    display: flex ;
+    padding-bottom: 10px;
+    padding-top:15px ;
+}
+.navbar-logo img{
+    width:80px;
+    height: 45px;
+}
+.navbar-logo{
+    margin-left:30px;
+    margin-right: 300px;
+}
+/* .navbar-logo{
+    position:relative;
+} */
+.links-x{
+    display: flex;
+    margin-left: 80px;
+    margin-right: 200px;
+    align-self: center;
+}
+.link-x{
+    padding-right: 25px;
+    padding-left: 25px;
+}
+.navbar-user-profile{
+    position: relative ;
+    padding-left: 350px;
+    padding-top: 2px;
+    padding-right:25px;
+    border-radius: 50%;
+}
+.navbar-user-profile img{
+    border-radius: 50%;
+    height: 40px;
+    width: 100%;
+  
+}
+.navbar-user-profile :hover{
+    outline-style:solid;
+    outline-color:  #ffffff ;
+    outline-width: 3px;
 }
