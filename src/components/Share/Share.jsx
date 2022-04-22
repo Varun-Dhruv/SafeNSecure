@@ -9,7 +9,7 @@ class Share extends Component{
         return (
             <div className="Navbar-x">
                 <Navbar account={this.props.account}/>
-                <h1> Hello world</h1>
+                <h1> Hello world</h1>   
             </div>
         )
            
