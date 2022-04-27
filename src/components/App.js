@@ -1,5 +1,6 @@
 //import DStorage from '../abis/DStorage.json'
 import React, { Component } from 'react';
+import { useCallback } from 'react';
 // import Navbar from './Navbar'
 //import Navbar from '../components/Navbar/Navbar'
 //import Main from './main'
@@ -11,6 +12,7 @@ import Home from './Home/Home';
 import Upload from './Upload/Upload'
 import View from './View_Files/View';
 import Share from './Share/Share';
+import SetUser from './SetUser/SetUser' 
 
 
 const ipfsClient = require('ipfs-http-client') //Declare IPFS
@@ -21,6 +23,7 @@ class App extends Component {
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
+    this.setState({loading:false})
   }
 
   async loadWeb3() {   //Setting up Web3
@@ -37,6 +40,7 @@ class App extends Component {
   }
 
   async loadBlockchainData() {
+    this.setState({loading:true})
     const web3 = window.web3//Declare Web3
 
     const accounts = await web3.eth.getAccounts() //Load account
@@ -49,6 +53,30 @@ class App extends Component {
 
       const dstorage = new web3.eth.Contract(DStorage.abi, networkData.address)  //Assign contract
       this.setState({ dstorage })
+
+      //Get number of users
+      const UserCount=await dstorage.methods.userCount().call()
+      this.setState({UserCount})
+
+      //Get Users addresses
+      //Get User Details
+      for(var i=1;i<=UserCount;i++){
+        const user=await dstorage.methods.UserList(i).call()
+        this.setState({
+          UserList:[...this.state.UserList,user]
+        })
+      }
+    this.state.UserList.map((users,key)=>{
+      if(users.owner===this.state.account)
+      {
+        this.state.isUserAuthenticated=true
+        this.state.userName=users.userName
+      }
+      console.log(users.userName,users.owner)
+    })
+     console.log("boom",this.state.UserList);
+        
+    
       //Get files amount
       const filesCount = await dstorage.methods.fileCount().call()
       this.setState({ filesCount })
@@ -63,14 +91,47 @@ class App extends Component {
     } else { //Else
       window.alert('DStorage contract not deployed to detected network')//alert Error
     }
-
-    this.setState({ loading: false })
+     
   }
 
-  // Get file from user
-  captureFile = event => {
-    event.preventDefault()
+  shareFile=(address,fileHash,fileSize,fileType,fileName,fileDescription)=>
+  {
+    console.log(address,fileHash,fileSize,fileType,fileName,fileDescription);
+    this.setState({loading:true})
+    console.log("Hello in shareFile")
+    this.state.dstorage.methods.shareFile(address,fileHash,fileSize,fileType,fileName,fileDescription).send({ from: this.state.account }).on('transactionHash',(hash)=>{
+      this.setState({
+        isFileShared:true,
+        loading:false
+      })
+      console.log("File Shared  successfully")
+     // window.location.reload()
+    }).on('error', (e) => {
+      window.alert('Error',e)
+      this.setState({ loading: false })
+    })
+    
+  }
 
+  setUser =(_username)=>{
+    this.setState({loading:true})
+    console.log("Hello in username",_username)
+    this.state.dstorage.methods.addUser(_username).send({ from: this.state.account }).on('transactionHash',(hash)=>{
+      this.setState({
+        isUserAuthenticated:true,
+        loading:false
+      })
+      console.log("Username set successfully")
+     // window.location.reload()
+    }).on('error', (e) => {
+      window.alert('Error',e)
+      this.setState({ loading: false })
+    })
+  }
+  // Get file from user
+  captureFile = (event) => {
+    event.preventDefault()
+   
     const file = event.target.files[0]
     const reader = new window.FileReader()
 
@@ -124,20 +185,35 @@ class App extends Component {
       files: [],
       type: null,
       name: null,
-      Username: '',
+      UserList:[],
+      isUserAuthenticated:false,
+      userName:''
     }
 
     //Bind functions
   }
 
   render() {
+    console.log("boom",this.state.UserList);
+    
     return (
       <div className='App'>
-
+      
         {/* <Navbar account={this.state.account} /> */}
         <Router>
           <Routes>
-            <Route path="/" element={<Home account={this.state.account} />} />
+            <Route path="/" element={
+              this.state.loading
+              ?<div>Loading...</div>
+              :
+              !this.state.isUserAuthenticated
+            ?<SetUser 
+            account={this.state.account}
+            userName={this.state.userName}
+            setUser={this.setUser}
+            />
+            :<Home account={this.state.account} 
+                   userName={this.state.userName}/>} />
 
             <Route path="/Upload" element={
               this.state.loading
@@ -152,7 +228,12 @@ class App extends Component {
              account={this.state.account}
              files={this.state.files.filter(item => item.uploader === this.state.account)}
              />}/>
-            <Route path="/Share" element={<Share  account={this.state.account}/>} />
+            <Route path="/Share" element={<Share
+            account={this.state.account} 
+            files={this.state.files} 
+            UserList={this.state.UserList}
+            shareFile={this.shareFile}
+            />} />
           </Routes>
         </Router>
       </div>

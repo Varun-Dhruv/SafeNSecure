@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { convertBytes } from '../helpers';
 import moment from 'moment'
+import  './View.css'
 import Navbar from '../Navbar/Navbar';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import { render } from 'react-dom';
 //import FilePreviewer from 'react-file-previewer'
 //import FilePreview from "react-file-preview-latest";
+
+
 class View extends Component {
   //onError = (err) => console.log("Error:", err);
   render() {
     return (
+      
       <div className="View">
         <Navbar account={this.props.account} />
         <table className="table-sm table-bordered text-monospace" style={{ width: '1000px', maxHeight: '450px' }}>
@@ -23,7 +30,7 @@ class View extends Component {
               <th scope="col" style={{ width: '120px' }}>hash/view/get</th>
             </tr>
           </thead>
-          {this.props.files.map((file, key) => {
+          {this.props.files.map((file, key) =>  {
             return (
               <thead style={{ 'fontSize': '12px' }} key={key}>
                 <tr>

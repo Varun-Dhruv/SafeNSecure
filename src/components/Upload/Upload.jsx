@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { convertBytes } from '../helpers';
-import moment from 'moment'
 import Navbar from '../Navbar/Navbar';
-
+import {useState,useEffect} from 'react';
+//import { FileUploader } from "react-drag-drop-files";
+import { FileDrop } from 'react-file-drop';
 class Upload extends Component {
 
   render() {
-
+    const styles = { border: '1px solid black', width: 600, color: 'black', padding: 20 };
+    const fileTypes = ["JPEG", "PNG", "GIF"];
     return (
       <div className='Upload'>
-           <Navbar account={this.props.account}/> 
+          <Navbar account={this.props.account}/> 
       <div className="container-fluid mt-5 text-center">
         <div className="row">
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '1024px' }}>
@@ -33,54 +34,24 @@ class Upload extends Component {
                             required />
                       </div>
                     <input type="file" onChange={this.props.captureFile} className="text-white text-monospace"/>
+                    
                     <button type="submit" className="btn-primary btn-block"><b>Upload!</b></button>
                   </form>
+                  <div style={styles}>
+                  <FileDrop
+                    onFrameDragEnter={(event) => console.log('onFrameDragEnter', event)}
+                    onFrameDragLeave={(event) => console.log('onFrameDragLeave', event)}
+                    onFrameDrop={(event) => console.log('onFrameDrop', event)}
+                    onDragOver={(event) => console.log('onDragOver', event)}
+                    onDragLeave={(event) => console.log('onDragLeave', event)}
+                    onDrop={(files, event) =>this.props.captureFile(files)}
+                   >
+          
+          Drop some files here!
+        </FileDrop>
+</div>
               </div>
                 <p>&nbsp;</p>
-                {/* <table className="table-sm table-bordered text-monospace" style={{ width: '1000px', maxHeight: '450px'}}>
-                <thead style={{ 'fontSize': '15px' }}>
-                  <tr className="bg-dark text-white">
-                    <th scope="col" style={{ width: '10px'}}>id</th>
-                    <th scope="col" style={{ width: '200px'}}>name</th>
-                    <th scope="col" style={{ width: '230px'}}>description</th>
-                    <th scope="col" style={{ width: '120px'}}>type</th>
-                    <th scope="col" style={{ width: '90px'}}>size</th>
-                    <th scope="col" style={{ width: '90px'}}>date</th>
-                    <th scope="col" style={{ width: '120px'}}>uploader/view</th>
-                    <th scope="col" style={{ width: '120px'}}>hash/view/get</th>
-                  </tr>
-                </thead>
-                { this.props.files.map((file, key) => {
-                  return(
-                    <thead style={{ 'fontSize': '12px' }} key={key}>
-                      <tr>
-                        <td>{file.fileId}</td>
-                        <td>{file.fileName}</td>
-                        <td>{file.fileDescription}</td>
-                        <td>{file.fileType}</td>
-                        <td>{convertBytes(file.fileSize)}</td>
-                        <td>{moment.unix(file.uploadTime).format('h:mm:ss A M/D/Y')}</td>
-                        <td>
-                          <a
-                            href={"https://etherscan.io/address/" + file.uploader}
-                            rel="noopener noreferrer"
-                            target="_blank">
-                            {file.uploader.substring(0,10)}...
-                          </a>
-                         </td>
-                        <td>
-                          <a
-                            href={"https://ipfs.infura.io/ipfs/" + file.fileHash}
-                            rel="noopener noreferrer"
-                            target="_blank">
-                            {file.fileHash.substring(0,10)}...
-                          </a>
-                        </td>
-                      </tr>
-                    </thead>
-                  )
-                })}
-              </table> */}
             </div>
           </main>
         </div>

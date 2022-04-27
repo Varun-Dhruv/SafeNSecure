@@ -1,19 +1,22 @@
 .links-x a{
     color:#ffffff;
+    font-size:18px;
+    font-weight:bold;
 }
 .navbar-x{
+    /* background-color: black; */
     background-color: #00a2e2;
     display: flex ;
     padding-bottom: 10px;
     padding-top:15px ;
 }
 .navbar-logo img{
-    width:80px;
-    height: 45px;
+    width:180px;
+    height: 50px;
 }
 .navbar-logo{
-    margin-left:30px;
-    margin-right: 300px;
+    margin-left:20px;
+    margin-right: 265px;
 }
 /* .navbar-logo{
     position:relative;
@@ -21,16 +24,20 @@
 .links-x{
     display: flex;
     margin-left: 80px;
-    margin-right: 200px;
+    margin-right: 120px;
     align-self: center;
 }
 .link-x{
-    padding-right: 25px;
-    padding-left: 25px;
+    padding-right: 35px;
+    padding-left: 10px;
+    text-decoration: none;
+}
+.link-x a{
+    text-decoration: none;
 }
 .navbar-user-profile{
     position: relative ;
-    padding-left: 350px;
+    padding-left: 300px;
     padding-top: 2px;
     padding-right:25px;
     border-radius: 50%;

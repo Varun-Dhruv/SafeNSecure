@@ -4,6 +4,7 @@ import Identicon from 'identicon.js';
 import { Link } from 'react-router-dom';
 import logo from './image(3).png';
 import './Navbar.css'
+import log from './stb.svg';
 class Navbar extends Component {
     constructor(props) {
         super(props)
@@ -25,7 +26,7 @@ class Navbar extends Component {
             
             <div className="navbar-x">
                 <div className="navbar-logo">
-                    <img src={logo} alt="logo" />
+                    <img src={log} alt="logo" />
                 </div>
                 <div className="links-x">
                     <div className="link-x">

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Identicon from 'identicon.js';
 import { Link } from 'react-router-dom';
-import logo from './image(3).png';
+import logo from './stb.svg';
+import { Navigate } from "react-router-dom";
 import './Home.css'
 class  Home extends Component {
     constructor(props) {
@@ -21,11 +22,11 @@ class  Home extends Component {
     return(
         
     <div className="diagonalimg"> 
-    <div className="content">
+    <div className="content-x">
     
     <div className="navbar">
         <div className="logo">
-            <img src={logo} alt="logo" />
+            <Link to ="/" ><img src={logo} alt="logo" /> </Link>
         </div>
         <div className="links">
             <div className="link">
@@ -42,7 +43,7 @@ class  Home extends Component {
             </div>
         </div>
         <div className="user-profile">
-            <img src={img} onClick={()=>{console.log("hello world niggas")}} alt="UserIdenticon" />
+            <img src={img} onClick={()=>{console.log(this.props.userName)}} alt="UserIdenticon" />
         </div>
     </div> 
     <div className="TagLine">
