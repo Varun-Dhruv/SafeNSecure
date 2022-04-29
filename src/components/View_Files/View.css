@@ -1,3 +1,31 @@
-.View{
-    display: grid;
+
+.View td{
+    text-align: center;
 }
+.table-t{
+   margin-left: 260px;
+   margin-top: 50px;
+}
+.View table{
+    border: 1px solid;
+    border-collapse: collapse;   
+}
+.View td{
+    padding:10px ;
+}
+.Tabs {
+    display: flex;
+    justify-content:space-between ;
+    margin-top:25px;
+    margin-left: 260px;
+    margin-right:1100px;
+}
+.Tabs button{
+    background-color: white;
+    border: none;
+    border-bottom:4px solid;
+    border-color:#00a2e2 ;
+
+   
+}
+

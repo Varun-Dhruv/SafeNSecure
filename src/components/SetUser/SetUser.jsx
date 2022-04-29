@@ -12,7 +12,6 @@ constructor(props) {
 
     //Bind functions
   }
-
     render() {
         const handleChange=(event)=>{
            this.setState(

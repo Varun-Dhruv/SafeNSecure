@@ -5,7 +5,8 @@ contract DStorage {
   string public name = "DStorage";// Name
   uint public userCount=0;  //UserCount
   mapping(uint =>User) public UserList; // mapping of users
-  mapping(address =>File[]) sharedFiles;  // mapping of shared files
+  mapping(address =>File[]) public sharedFiles;  // mapping of shared files
+  mapping(address=>uint) public sharedFilesCount;
   uint public fileCount=0;  // Number of files
   mapping(uint=>File) public files;// Mapping fileId=>Struct 
 
@@ -58,7 +59,30 @@ contract DStorage {
     UserList[userCount] =  User(_userName,payable(msg.sender)); //adding user to mapping 
     emit UserAdded(_userName,payable(msg.sender));
   }
- 
+
+  function getSharedFilesName(address payable receiver,uint i) public view returns(string memory _fileName ) {
+    return(sharedFiles[receiver][i].fileName);
+  }
+  function getSharedFilesHash(address payable receiver,uint i) public view returns(string memory _fileHash ) {
+    return(sharedFiles[receiver][i].fileHash);
+  }
+  function getSharedFilesSize(address payable receiver,uint i) public view returns(uint _fileSize) {
+    return(sharedFiles[receiver][i].fileSize);
+  }
+  function getSharedFilesType(address payable receiver,uint i) public view returns(string memory _fileType) {
+    return(sharedFiles[receiver][i].fileType);
+  }
+  function getSharedFilesDescription(address payable receiver,uint i) public view returns(string memory _fileDescription ) {
+    return(sharedFiles[receiver][i].fileDescription);
+  }
+  function getSharedFileUploadTime(address payable receiver,uint i) public view returns(uint _fileUploadTime ) {
+    return(sharedFiles[receiver][i].uploadTime);
+  }  
+  function getSharedFilesUploader(address payable receiver,uint i) public view returns(address _fileUploaderName) {
+    return(sharedFiles[receiver][i].uploader);
+  }
+  //Get Shared Files
+  
  //Share a file 
   function shareFile(address payable receiver ,string memory _fileHash, uint _fileSize, string memory _fileType, string memory _fileName, string memory _fileDescription) public {
     require((bytes(_fileHash).length>0)); // Make sure the file hash exists
@@ -72,8 +96,11 @@ contract DStorage {
     require(msg.sender!=address(0)); // Make sure uploader address exists
     
     require(_fileSize>0); // Make sure file size is more than 0
-    
-    sharedFiles[receiver].push(File(fileCount,_fileHash,_fileSize,_fileType,_fileName,_fileDescription, block.timestamp ,payable(msg.sender)));
+
+     //Increasing shared files count
+     sharedFilesCount[receiver]++;
+
+     sharedFiles[receiver].push(File(fileCount,_fileHash,_fileSize,_fileType,_fileName,_fileDescription, block.timestamp ,payable(msg.sender)));
   }
 
 // Upload File function

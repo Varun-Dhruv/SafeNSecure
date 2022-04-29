@@ -57,6 +57,9 @@ class App extends Component {
       //Get number of users
       const UserCount=await dstorage.methods.userCount().call()
       this.setState({UserCount})
+     
+      //const SharedFiles= await dstorage.methods.sharedFiles(this.state.account).call()
+      //console.log(SharedFiles)
 
       //Get Users addresses
       //Get User Details
@@ -72,10 +75,8 @@ class App extends Component {
         this.state.isUserAuthenticated=true
         this.state.userName=users.userName
       }
-      console.log(users.userName,users.owner)
-    })
-     console.log("boom",this.state.UserList);
-        
+     {/* console.log(users.userName,users.owner)*/}
+    })   
     
       //Get files amount
       const filesCount = await dstorage.methods.fileCount().call()
@@ -87,41 +88,82 @@ class App extends Component {
           files: [...this.state.files, file]
         })
       }
-
+      const SharedFilesCount=await dstorage.methods.sharedFilesCount(this.state.account).call()
+      console.log("Count",SharedFilesCount);
+      this.setState({SharedFilesCount})
+      for(var i=0;i<SharedFilesCount;i++)
+      {
+        console.log("Shared File no.",i)
+        const SharedFilesName = await dstorage.methods.getSharedFilesName(this.state.account,i).call()
+        console.log("Name",SharedFilesName)
+        this.setState({
+          SharedFilesNames:[...this.state.SharedFilesNames,SharedFilesName]
+        })
+        const SharedFileHash = await dstorage.methods.getSharedFilesHash(this.state.account,i).call()
+        console.log("Hash",SharedFileHash)
+        this.setState({
+          SharedFilesHash:[...this.state.SharedFilesHash,SharedFileHash]
+        })     
+        const SharedFileSize = await dstorage.methods.getSharedFilesSize(this.state.account,i).call()
+        console.log("Size",SharedFileSize)
+        this.setState({
+          SharedFilesSize:[...this.state.SharedFilesSize,SharedFileSize]
+        })        
+        const SharedFileType = await dstorage.methods.getSharedFilesType(this.state.account,i).call()
+        console.log("Type",SharedFileType)
+        this.setState({
+          SharedFilesType:[...this.state.SharedFilesType,SharedFileType]
+        })     
+        const SharedFileDescr = await dstorage.methods.getSharedFilesDescription(this.state.account,i).call()
+        console.log("Descr",SharedFileDescr)
+        this.setState({
+          SharedFilesDescription:[...this.state.SharedFilesDescription,SharedFileDescr]
+        })     
+        const SharedFileUploadT = await dstorage.methods.getSharedFileUploadTime(this.state.account,i).call()
+        console.log("Hash",SharedFileUploadT)
+        this.setState({
+          SharedFilesUploadTime:[...this.state.SharedFilesUploadTime,SharedFileUploadT]
+        })     
+        const SharedFileUploader = await dstorage.methods.getSharedFilesUploader(this.state.account,i).call()
+        console.log("Hash",SharedFileHash)
+        this.setState({
+          SharedFilesUploader:[...this.state.SharedFilesUploader,SharedFileUploader]
+        })     
+      }
     } else { //Else
       window.alert('DStorage contract not deployed to detected network')//alert Error
     }
-     
+
+     this.setState({loading:false})
   }
 
   shareFile=(address,fileHash,fileSize,fileType,fileName,fileDescription)=>
   {
-    console.log(address,fileHash,fileSize,fileType,fileName,fileDescription);
+    //console.log(address,fileHash,fileSize,fileType,fileName,fileDescription);
     this.setState({loading:true})
-    console.log("Hello in shareFile")
     this.state.dstorage.methods.shareFile(address,fileHash,fileSize,fileType,fileName,fileDescription).send({ from: this.state.account }).on('transactionHash',(hash)=>{
       this.setState({
         isFileShared:true,
         loading:false
       })
-      console.log("File Shared  successfully")
+      alert("File Shared  successfully")
      // window.location.reload()
     }).on('error', (e) => {
       window.alert('Error',e)
       this.setState({ loading: false })
-    })
-    
+    })    
   }
+
 
   setUser =(_username)=>{
     this.setState({loading:true})
-    console.log("Hello in username",_username)
+   // console.log("Hello in username",_username)
     this.state.dstorage.methods.addUser(_username).send({ from: this.state.account }).on('transactionHash',(hash)=>{
       this.setState({
         isUserAuthenticated:true,
         loading:false
       })
-      console.log("Username set successfully")
+      //console.log("Username set successfully")
      // window.location.reload()
     }).on('error', (e) => {
       window.alert('Error',e)
@@ -142,7 +184,7 @@ class App extends Component {
         type: file.type,
         name: file.name
       })
-      console.log('buffer', this.state.buffer)
+      //console.log('buffer', this.state.buffer)
     }
   }
   //Upload File
@@ -187,15 +229,20 @@ class App extends Component {
       name: null,
       UserList:[],
       isUserAuthenticated:false,
-      userName:''
+      userName:'',
+      SharedFilesNames:[],
+      SharedFilesHash:[],
+      SharedFilesSize:[],
+      SharedFilesType:[],
+      SharedFilesDescription:[],
+      SharedFilesUploadTime:[],
+      SharedFilesUploader:[],
     }
 
     //Bind functions
   }
 
   render() {
-    console.log("boom",this.state.UserList);
-    
     return (
       <div className='App'>
       
@@ -225,12 +272,20 @@ class App extends Component {
                   uploadFile={this.uploadFile}
                 />} />
              <Route path="/View"  element={<View
+             SharedFilesNames={this.state.SharedFilesNames}
+             SharedFilesHash={this.state.SharedFilesHash}
+             SharedFilesSize={this.state.SharedFilesSize}
+             SharedFilesType={this.state.SharedFilesType}
+             SharedFilesDescription={this.state.SharedFilesDescription}
+             SharedFilesUploadTime={this.state.SharedFilesUploadTime}
+             SharedFilesUploader={this.state.SharedFilesUploader}
+             SharedFilesCount={this.state.SharedFilesCount}
              account={this.state.account}
              files={this.state.files.filter(item => item.uploader === this.state.account)}
              />}/>
             <Route path="/Share" element={<Share
             account={this.state.account} 
-            files={this.state.files} 
+            files={this.state.files.filter(item => item.uploader === this.state.account)}
             UserList={this.state.UserList}
             shareFile={this.shareFile}
             />} />

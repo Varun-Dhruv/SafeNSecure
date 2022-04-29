@@ -37,7 +37,7 @@ class Share extends Component{
                                         ,this.state.SelectedFileSize
                                         ,this.state.SelectedFileType
                                         ,this.state.SelectedFileName
-                                        ,this.state.SelectedFileDescription
+                                        ,this.state.SelectedFileName
                                         )
                                         this.setState({ isFileSelected:false})
 
