@@ -1,0 +1,79 @@
+.links-x a{
+    color:#ffffff;
+    font-size:18px;
+    font-weight:bold;
+}
+.navbar-x{
+    /* background-color: black; */
+    background-color: #00a2e2;
+    display: flex ;
+    padding-bottom: 10px;
+    padding-top:15px ;
+}
+.navbar-logo img{
+    width:180px;
+    height: 50px;
+}
+.navbar-logo{
+    margin-left:20px;
+    margin-right: 265px;
+}
+/* .navbar-logo{
+    position:relative;
+} */
+.links-x{
+    display: flex;
+    margin-left: 80px;
+    margin-right: 120px;
+    align-self: center;
+}
+.link-x {
+    position: relative;
+    padding-right: 35px;
+    padding-left: 10px;
+    text-decoration: none;
+    z-index: 1;
+}
+.link-x a{
+    text-decoration: none;
+}
+.link-x::before{
+    content: '';
+    width: 0;
+    height: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: white;
+    transition: all 0.6s ease;
+}
+
+.link-x:hover::before{
+    width: 100%;
+    height: 100%;
+}
+
+.link-x:hover a{
+    color: #00a2e2;
+}
+
+.navbar-user-profile{
+    position: relative ;
+    padding-left: 300px;
+    padding-top: 2px;
+    padding-right:25px;
+    border-radius: 50%;
+}
+.navbar-user-profile img{
+    border-radius: 50%;
+    height: 40px;
+    width: 100%;
+  
+}
+.navbar-user-profile :hover{
+    outline-style:solid;
+    outline-color:  #ffffff ;
+    outline-width: 3px;
+}

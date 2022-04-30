@@ -1,0 +1,15 @@
+.content{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.Share button{
+ margin: 20px;
+}
+.Share ul{
+    list-style: none;
+}
+.Share h1{
+    opacity: 100;
+    color: black;
+    font-size: 30px;
+}

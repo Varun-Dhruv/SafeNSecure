@@ -1,0 +1,9 @@
+Blue - #2977c9 
+
+ Color package
+1)
+  Dark Green -#17252A
+  Green -#2B7A78
+  light green -#3AAFA9
+  light grey- #DEF2F1
+  White-#FEFFFF

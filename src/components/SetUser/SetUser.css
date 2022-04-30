@@ -1,0 +1,16 @@
+.SetUserName h1{
+    font-style: Arial;
+    color: black
+}
+.SetUserName
+{
+    height: 1000px;
+    width: 100%;
+    background-color: #00a2e2 ; 
+}
+.UserNameForm input{
+    margin:20px 20px 20px 20px;
+    padding-top:2px;
+    border-color: black;
+    border: 2px;
+}
