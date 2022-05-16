@@ -41,6 +41,9 @@ class Navbar extends Component {
                     <div className="link-x">
                         <Link to="/Share">Share Files</Link>
                     </div>
+                    <div className="link-x">
+                        <Link to="/About">About Us</Link>
+                    </div>
                 </div>
                 <div className="navbar-user-profile">
                     <img src={img} alt="" />

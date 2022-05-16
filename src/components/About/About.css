@@ -1,0 +1,53 @@
+
+.About footer{
+    background-color: black;
+    height: 700px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+h2{
+    color:white;
+    font-size: xx-large;
+}
+p{
+    color: white;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+
+.About h2 { 
+    font-size: xx-large;
+    color: white;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.Profile-About{
+    width: 200px;
+    padding-top: 70px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.Profile-About img{
+    align-items: center;
+    border-radius: 50%;
+}
+#Li {
+    border-radius: 0%;
+    padding-top: 20px;
+    padding-left: 80px;
+    width:40px
+}
+.Profile-About h3{
+    font-size: xx-large;
+    position: relative;
+    text-align: center;
+    color: white;
+}
+.profiles{
+    margin-left: 80px;
+    margin-right: 80px;
+    display: flex;
+    justify-content: space-between;
+}

@@ -4,6 +4,7 @@ import moment from 'moment'
 import './View.css'
 import Navbar from '../Navbar/Navbar';
 import 'react-tabs/style/react-tabs.css';
+import index from "./index.jpg"
 
 //import FilePreviewer from 'react-file-previewer'
 //import FilePreview from "react-file-preview-latest";
@@ -21,15 +22,8 @@ class View extends Component {
  
   //onError = (err) => console.log("Error:", err);
   render() {
-   
-    // this.state.FileStates.push( this.props.SharedFilesNames)
-    // this.state.FileStates.push(this.state.SharedFilesHash)
-    // this.state.FileStates.push(this.state.SharedFilesSize)
-    // this.state.FileStates.push(this.state.SharedFilesType)
-    // this.state.FileStates.push(this.state.SharedFilesDescription)
-    // this.state.FileStates.push(this.state.SharedFilesUploadTime)
-    // this.state.FileStates.push(this.state.SharedFilesUploader)
-
+    //console.log("This is File",this.props.SharedFiles)
+    
     return (
 
       <div className="View">
@@ -39,12 +33,12 @@ class View extends Component {
           <button onClick={() => { this.setState({ tab1: false }) }}>Shared With me</button>
         </div>
         {this.state.tab1 ?
-          <table className="table-t" style={{ width: '1000px', maxHeight: '450px' }}>
+        
+         <table className="table-t" style={{ width: '1000px', maxHeight: '450px' }}>
             <thead style={{ 'fontSize': '15px' }}>
               <tr className="tr-class">
 
                 <th scope="col" style={{ width: '200px' }}>Name</th>
-                <th scope="col" style={{ width: '230px' }}>Description</th>
                 <th scope="col" style={{ width: '120px' }}>Type</th>
                 <th scope="col" style={{ width: '90px' }}>Size</th>
                 <th scope="col" style={{ width: '90px' }}>Date</th>
@@ -58,7 +52,6 @@ class View extends Component {
                   <tr>
 
                     <td>{file.fileName}</td>
-                    <td>{file.fileDescription}</td>
                     <td>{file.fileType}</td>
                     <td>{convertBytes(file.fileSize)}</td>
                     <td>{moment.unix(file.uploadTime).format('h:mm:ss A M/D/Y')}</td>
@@ -96,43 +89,34 @@ class View extends Component {
                 <tr className="tr-class">
 
                   <th scope="col" style={{ width: '200px' }}>Name</th>
-                  <th scope="col" style={{ width: '230px' }}>Description</th>
                   <th scope="col" style={{ width: '120px' }}>Type</th>
                   <th scope="col" style={{ width: '90px' }}>Size</th>
                   <th scope="col" style={{ width: '90px' }}>Date</th>
-                  <th scope="col" style={{ width: '120px' }}>Uploader/View</th>
                   <th scope="col" style={{ width: '120px' }}>Hash/View/Get</th>
                 </tr>
               </thead>
               {
-                this.state.FileStates.map((file, key) => {
-                  
+                this.props.SharedFiles.map((file, key) => {                  
                   return (
                     // for(var i=0;i<this.props.SharedFilesCount;i++)
-                    
+            
                     <thead style={{ 'fontSize': '12px' }} key={key}>
                       <tr>
-                        <td>{this.props.SharedFilesNames}</td>
-                        <td>{this.props.SharedFilesDescription}</td>
-                        <td>{this.props.SharedFilesType}</td>
-                        <td>{this.props.SharedFilesSize}</td>
-                        <td>{this.props.SharedFilesUploaderTime}</td>
-                        <td>
-                          {this.props.SharedFilesUploader}
-                        </td>
+                        <td>{file._fileName}</td>
+                        <td>{file._fileType}</td>
+                        <td>{file._fileSize}</td>
+                        <td>{moment.unix(file._fileUploadTime).format('h:mm:ss A M/D/Y')}</td>
                         <td>
                           <a
-                            href={"https://ipfs.infura.io/ipfs/" + this.props.SharedFilesHash}
+                            href={"https://ipfs.infura.io/ipfs/" +file._fileHash}
                             rel="noopener noreferrer"
                             target="_blank">
-                            {this.props.SharedFilesHash.substring(0, 10)}...
+                            {file._fileHash.substring(0, 10)}...
                           </a>
-
                         </td>
               
                       </tr>
-                    </thead>
-                    
+                    </thead> 
                   )
                 }
                 )
