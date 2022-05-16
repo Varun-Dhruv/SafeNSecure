@@ -25,7 +25,14 @@
     border: none;
     border-bottom:4px solid;
     border-color:#00a2e2 ;
+}
 
-   
+.Files-View{
+    padding-top: 100px;
+    padding-left: 200px;
+    display: grid;
+    justify-content: space-between;
+    grid-gap: 10px;
+    grid-template-columns: repeat(36, 1fr); 
 }
 

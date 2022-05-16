@@ -48,7 +48,10 @@ class Main extends Component {
                 </thead>
                 { this.props.files.map((file, key) => {
                   return(
-                    <thead style={{ 'fontSize': '12px' }} key={key}>
+                    
+                      this.props.files.length
+                    ?<div>No files Uploaded yet</div>
+                    :<thead style={{ 'fontSize': '12px' }} key={key}>
                       <tr>
                         <td>{file.fileId}</td>
                         <td>{file.fileName}</td>
@@ -74,6 +77,7 @@ class Main extends Component {
                         </td>
                       </tr>
                     </thead>
+                    
                   )
                 })}
               </table>

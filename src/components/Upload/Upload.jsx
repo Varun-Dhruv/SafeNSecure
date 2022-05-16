@@ -20,25 +20,14 @@ class Upload extends Component {
                 <h2 className="text-white text-monospace bg-dark"><b><ins>Share File</ins></b></h2>
                   <form onSubmit={(event) => {
                     event.preventDefault()
-                    const description = this.fileDescription.value
-                    this.props.uploadFile(description)
-                  }} >
-                      <div className="form-group">
-                        <br></br>
-                          <input
-                            id="fileDescription"
-                            type="text"
-                            ref={(input) => { this.fileDescription = input }}
-                            className="form-control text-monospace"
-                            placeholder="description..."
-                            required />
-                      </div>
+                    this.props.uploadFile()
+                  }}>
                     <input type="file" onChange={this.props.captureFile} className="text-white text-monospace"/>
                     
                     <button type="submit" className="btn-primary btn-block"><b>Upload!</b></button>
                   </form>
                   <div style={styles}>
-                  <FileDrop
+                  {/* <FileDrop
                     onFrameDragEnter={(event) => console.log('onFrameDragEnter', event)}
                     onFrameDragLeave={(event) => console.log('onFrameDragLeave', event)}
                     onFrameDrop={(event) => console.log('onFrameDrop', event)}
@@ -48,8 +37,8 @@ class Upload extends Component {
                    >
           
           Drop some files here!
-        </FileDrop>
-</div>
+        </FileDrop> */}
+              </div>
               </div>
                 <p>&nbsp;</p>
             </div>
@@ -57,6 +46,7 @@ class Upload extends Component {
         </div>
       </div>
       </div>
+    
     );
   }
 }
