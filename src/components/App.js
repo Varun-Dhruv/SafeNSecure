@@ -39,6 +39,7 @@ class App extends Component {
     }
   }
 
+
   async loadBlockchainData() {
     this.setState({loading:true})
     const web3 = window.web3//Declare Web3
@@ -103,15 +104,14 @@ class App extends Component {
     } else { //Else
       window.alert('DStorage contract not deployed to detected network')//alert Error
     }
-
      this.setState({loading:false})
   }
 
-  shareFile=(address,fileHash,fileSize,fileType,fileName,fileDescription)=>
+  shareFile=(address,fileHash,fileSize,fileType,fileName)=>
   {
     //console.log(address,fileHash,fileSize,fileType,fileName,fileDescription);
     this.setState({loading:true})
-    this.state.dstorage.methods.shareFile(address,fileHash,fileSize,fileType,fileName,fileDescription).send({ from: this.state.account }).on('transactionHash',(hash)=>{
+    this.state.dstorage.methods.shareFile(address,fileHash,fileSize,fileType,fileName).send({from: this.state.account}).on('transactionHash',(hash)=>{
       this.setState({
         isFileShared:true,
         loading:false

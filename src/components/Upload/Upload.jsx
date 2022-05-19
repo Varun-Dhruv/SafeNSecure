@@ -27,7 +27,7 @@ class Upload extends Component {
                     <button type="submit" className="btn-primary btn-block"><b>Upload!</b></button>
                   </form>
                   <div style={styles}>
-                  {/* <FileDrop
+                  <FileDrop
                     onFrameDragEnter={(event) => console.log('onFrameDragEnter', event)}
                     onFrameDragLeave={(event) => console.log('onFrameDragLeave', event)}
                     onFrameDrop={(event) => console.log('onFrameDrop', event)}
@@ -37,7 +37,7 @@ class Upload extends Component {
                    >
           
           Drop some files here!
-        </FileDrop> */}
+        </FileDrop>
               </div>
               </div>
                 <p>&nbsp;</p>
